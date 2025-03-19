@@ -1,44 +1,8 @@
 #include "EvryThng.h"
 #include <stdarg.h>
 #include <tchar.h>
-#include <iostream>
 #include <io.h>
 #include <fcntl.h>
-
-int main() {
-    // Тестирование ReportError
-    HANDLE hFile;
-
-    // Тест 1: Открытие несуществующего файла
-    hFile = CreateFile(_T("nonexistent.txt"), GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-    if (hFile == INVALID_HANDLE_VALUE) {
-        ReportError(_T("Ошибка открытия файла"), 1, TRUE);
-    }
-
-    // Тест 2: Запись в файл только для чтения
-    hFile = CreateFile(_T("readonly.txt"), GENERIC_WRITE, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-    if (hFile == INVALID_HANDLE_VALUE) {
-        ReportError(_T("Ошибка записи в файл"), 2, TRUE);
-    }
-
-    // Тестирование perror
-    FILE* fp;
-    setlocale(LC_ALL, "ru");
-
-    // Тест 1: Открытие несуществующего файла
-    fp = fopen("nonexistent.txt", "r");
-    if (fp == NULL) {
-        perror("(perror)Ошибка открытия файла");
-    }
-
-    // Тест 2: Запись в файл только для чтения
-    fp = fopen("readonly.txt", "w");
-    if (fp == NULL) {
-        perror("(perror)Ошибка записи в файл");
-    }
-
-    return 0;
-}
 
 BOOL PrintStrings(HANDLE hOut, ...)
 {
